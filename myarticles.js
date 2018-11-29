@@ -41,6 +41,9 @@ newScript.src = urlPrefix + arxiv_authorid + '.js';
 headID.appendChild(newScript);
 
 
+
+
+
 function manageDefaults()
 {
 	if (typeof arxiv_includeTitle === 'undefined') {
@@ -125,9 +128,20 @@ function makearXiv(feed)
 	    num_entries = arxiv_max_entries;
 	    extra_entries = true;
     }
+
+
+
+    feed.entries.sort(function(a, b){
+        if(a.published < b.published) { return 1; }
+        if(a.published > b.published) { return -1; }
+        return 0;
+    })
+
+
+
     for (x=0; x<num_entries; x++) {
 	    //Add the numeral in brackets with a space
-	    html += '<dt>['+(x+1)+']&nbsp\n';
+	    html += '<dt>['+(num_entries-x)+']&nbsp\n';
 	    //add a span with the ref to the id in it
 	    /*html += '\t<span class="list-identifier" style="font-weight:bold"><a href="'+feed.entries[x].id+'" title="Abstract">'+feed.entries[x].id.substring(21,31)+'</a> [';*/
 	    html += '\t<span class="list-identifier" style="font-weight:bold">'+feed.entries[x].id.substring(21,31)+' [';
