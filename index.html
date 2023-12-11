@@ -9,12 +9,49 @@
 var arxiv_authorid="chubb_c_1";
 var arxiv_format="arxiv";
 var arxiv_includeDOI=1;
-var arxiv_includeSubjects=1;
+var arxiv_includeSubjects=0;
 var arxiv_includeComments=0;
 var arxiv_includeSummary=0;
 var arxiv_max_entries=0;
+
+var arxiv_paper_topic={
+	"1502.06967":"cm",
+
+	"1603.03039":"cm",
+	"1608.02600":"cm",
+
+	"1701.03114":"fin",
+	"1711.01193":"fin",
+	"1711.06658":"misc",
+
+	"1809.07778":"fin",
+	"1809.10704":"qec",
+	"1810.02366":"fin",
+	"1812.08186":"qec",
+
+	"2101.04125":"qec",
+
+	"2211.02116":"qec",
+
+	"2303.05524":"fin",
+	"2305.17163":"misc",
+	"2310.10722":"qec",
+};
+var arxiv_topic_color={
+	"cm":"#0000FF",
+	"qec":"#CC0000",
+	"fin":"#009900",
+	"misc":"#000000",
+};
+
 //--></script>
 <style type="text/css">
+a:link, a:visited {
+  color: #555555;
+  background-color: transparent;
+  text-decoration: underline;
+}
+
 div.arxivfeed { margin-bottom: 5px; width:700px; }
 html { height: 100%; margin-bottom: 1px; }
 </style>
@@ -50,37 +87,52 @@ analytics"></a></div></noscript>
 </head>
     
     
-<body style="background-color: rgb(255,255,255); color: rgb(0,0,0);" alink="#FF9999" link="#FF0000" vlink="#DD0000">
-	<h1 style="text-align: center;"><font size="7">Christopher T. Chubb</font></h1>
+<body style="background-color: rgb(210,210,210); color: rgb(0,0,0);" alink="#FF9999" link="#FF0000" vlink="#DD0000">
+    <h1 style="text-align: center;"><font size="7">Christopher T. Chubb</font></h1>
     <p style="text-align: center;margin-top:-20px;">
         <font size="5">
-            <a href="./index.html" style="text-decoration: none;font-size:130%">Home</a>&emsp;
-            <a href="./files.html" style="text-decoration: none;font-size:130%">Files</a>&emsp;
-            <a href="./CV.pdf" style="text-decoration: none;font-size:130%">CV</a>
+            <a href="./index.html" style="text-decoration: underline;font-size:150%">Home</a>&emsp;
+            <a href="./files.html" style="text-decoration: underline;font-size:150%">Files</a>&emsp;
+            <a href="./CV.pdf" style="text-decoration: underline;font-size:150%">CV</a>
             </br>
-            <a href="https://scholar.google.com.au/citations?user=s0tFhnwAAAAJ&hl=en">Google Scholar</a>&emsp;
-            <a href="https://arxiv.org/a/chubb_c_1">ArXiv</a>&emsp;
-            <a href="https://orcid.org/0000-0002-2668-1567">ORCID</a>&emsp;
-            <a href="https://scirate.com/cchubb/papers">SciRate</a>
+            <a style="text-decoration:none" href="https://scholar.google.com.au/citations?user=s0tFhnwAAAAJ&hl=en">Google Scholar</a>&emsp;
+            <a style="text-decoration:none" href="https://arxiv.org/a/chubb_c_1">ArXiv</a>&emsp;
+            <a style="text-decoration:none" href="https://orcid.org/0000-0002-2668-1567">ORCID</a>&emsp;
+            <a style="text-decoration:none" href="https://scirate.com/cchubb/papers">SciRate</a>&emsp;
+            <a style="text-decoration:none" href="https://www.youtube.com/@QuantumChubb">YouTube</a>
         </font> 
         </br>
         <font size="3">
-            Updated January 2019
+            Updated December 2023
         </font>
     </p>
     
 	<br>
 
-    <center><div style="width:35cm;text-align:left">
-        I'm currently a PhD student, supervised by <a href="http://www.physics.usyd.edu.au/~sflammia/">A/Prof. Steven T. Flammia</a> and <a href="http://marcotom.info/">Dr. Marco Tomamichel</a>, in the <a href="http://equs.org/">Centre for Engineered Quantum Systems (EQuS)</a>, at the <a href="https://sydney.edu.au">The University of Sydney</a>.
+    <center><div style="width:25cm;text-align:left">
         
-        <br><br>
+        </br>
+Mathematical physicist and quantum information theorist (big pile of qubits thinking about other qubits).
+</br> 
+</br> 
+I am currently a postdoc in <a href="https://qit.ethz.ch/">ETH Zurich</a>, was previously a postdoc at <a href="https://www.usherbrooke.ca/">Universit&eacute; de Sherbrooke</a>, and did my PhD and BSc at <a href="https://sydney.edu.au">University of Sydney</a>. 
+
+My research broadly sits in four buckets:
+<ul>
+	<li> <span id="topic_qec"><b>QEC:</b></span> Quantum error correction, with particular focus on tensor network decoding and the relationship between quantum codes and classical statistical mechanical systems </li>
+	<li> <span id="topic_fin"><b>Fin:</b></span> Finite-size effects in resource theories, specifically looking at finite-size corrections to asymptotic analyses of the theories of quantum thermodynamics and entanglement </li>
+	<li> <span id="topic_cm"><b>CM:</b></span> The interface between quantum information theory and condensed matter, with particular focus on tensor network methods
+	<li> <span id="topic_misc"><b>Misc:</b></span> Various miscellaneous topics in Quantum Information </li>
+</ul>
+
+<script>
+	for(k in arxiv_topic_color)
+		document.getElementById("topic_"+k).style.color=arxiv_topic_color[k];
+</script>
+
+While many of my papers span several categories, I have colour-coded and labelled the papers below by their primary category. Also my files (papers, talks, and posters) are available <a href="./files.html">here</a>, and my full CV is available <a href="./CV.pdf">here</a>.
         
-        
-        
-        I am primarily interested in the interface between quantum information principles, and the theory of quantum many body systems. Specifically I am interested in quantum Hamiltonian complexity, as well as numerical methods for simulating quantum systems, such as tensor network methods. I have also done some work on Quantum Shannon Theory, specifically using small and moderate deviation techniques. My files (papers, talks, and posters) are available <a href="./files.html">here</a>, and my full CV is available <a href="./CV.pdf">here</a>, and a list of my papers is provided below.
-        
-        <br>
+        </br></br>
         <center> <div style="width:20cm;text-align:left" id="arxivfeed"></div> </center>
     </div></center>
     

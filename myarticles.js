@@ -40,10 +40,6 @@ newScript.src = urlPrefix + arxiv_authorid + '.js';
 
 headID.appendChild(newScript);
 
-
-
-
-
 function manageDefaults()
 {
 	if (typeof arxiv_includeTitle === 'undefined') {
@@ -140,8 +136,32 @@ function makearXiv(feed)
 
 
     for (x=0; x<num_entries; x++) {
+	    topic_color="#000000";
+	    topic_label="Misc";
+	    if(feed.entries[x].id.substring(21,31) in arxiv_paper_topic){
+	    	topic = arxiv_paper_topic[feed.entries[x].id.substring(21,31)]
+	    	topic_color = arxiv_topic_color[topic] 
+	    	if(topic=="cm"){
+	    		topic_label="CM";
+	    		//topic_color="#0000FF";
+	    	} else if(topic=="qec") {
+	    		topic_label="QEC";
+	    		//topic_color="#DD0000";
+	    	} else if(topic=="fin") {
+	    		topic_label="Fin"
+	    		//topic_color="#00BB00";
+	    	} else if(topic=="misc");
+	    	else 
+	    		console.error('Paper has bad topic: arxiv='+feed.entries[x].id.substring(21,31) + ', topic=' + topic);
+	    }
+	    
 	    //Add the numeral in brackets with a space
-	    html += '<dt>['+(num_entries-x)+']&nbsp\n';
+	    //html += '<dt>['+(num_entries-x)+']&nbsp\n';
+	    html += '<dt><b>['+(num_entries-x)+', <span style="color:'+topic_color+'">'+topic_label+'</span>'+']</b>&nbsp\n';
+	    
+	    
+	    
+	    
 	    //add a span with the ref to the id in it
 	    /*html += '\t<span class="list-identifier" style="font-weight:bold"><a href="'+feed.entries[x].id+'" title="Abstract">'+feed.entries[x].id.substring(21,31)+'</a> [';*/
 	    html += '\t<span class="list-identifier" style="font-weight:bold">'+feed.entries[x].id.substring(21,31)+' [';
@@ -153,16 +173,30 @@ function makearXiv(feed)
 			     +'" title="Download '+format_name+'">'+ format_name+'</a>';
 		}
 	    } */
-            html += '<a href="http://www.arxiv.org/abs/'+feed.entries[x].id.substring(21,34)+'">abs</a> ';
-            html += '<a href="http://www.arxiv.org/pdf/'+feed.entries[x].id.substring(21,34)+'.pdf">pdf</a>';
+            html += '<a href="http://www.arxiv.org/abs/'+feed.entries[x].id.substring(21,31)+'">abs</a> ';
+            html += '<a href="http://www.arxiv.org/pdf/'+feed.entries[x].id.substring(21,31)+'.pdf">pdf</a>';
 	    //Close the list of formats with the vrack and span
-	    html += "]</span>\n</dt>\n";
+	    html += "] "
+	    //html += '<span style="color:'+topic_color+'">{'+topic_label+'}</span>'
+	    html += "</span>\n</dt>\n";
+	    
+	    
+	    
 	    //open a set of divs to contain the various fields
-	    html+='<dd style="padding-bottom:1em;">\n\t<div class="meta" style="line-height:130%;">\n\t\t<div class="list-title" style="font-size:large;font-weight:bold;margin:0.25em 0 0 0;line-height:120%">\n'
+	    
+	    
+	    
+	    	
+	    
+	    
+	    //if(arxiv_topic_qec.includes(num_entries-x))
+	    //	topic_color="#FF0000";
+	    
+	    html+='<dd style="padding-bottom:1em;padding-left:0em;color:'+topic_color+'">\n\t<div class="meta" style="line-height:130%;">\n\t\t<div class="list-title" style="font-size:large;font-weight:bold;margin:0.25em 0 0 0;line-height:120%">\n'
 	    //Add the title in a span
-	    html += '\t\t\t'+ feed.entries[x].title+'\n\t\t</div>';
+	    html += '\t\t\t\t\t'+ feed.entries[x].title+'\n\t\t</div>';
 	    //add authors in a div
-	    html += '\t\t<div class="list-authors" style="font-weight:normal;font-size:90%;text-decoration:none;">'+feed.entries[x].authors+'</div>\n';
+	    html += '\t\t\t\t<div class="list-authors" style="font-weight:normal;font-size:90%;text-decoration:none;">'+feed.entries[x].authors+'</div>\n';
 	    //Add coments in a div only if available
 	    if (arxiv_includeComments && feed.entries[x].comment && feed.entries[x].comment.length > 1) {
 		    html += '\t\t<div class="list-comments" style="font-weight:normal;font-size:90%;"><span class="descriptor">Comments:</span> ' + feed.entries[x].comment + '</div>\n';
@@ -188,6 +222,13 @@ function makearXiv(feed)
 		       html += '<a href="https://dx.doi.org/'+dois[j]+'">'+dois[j]+'</a> '; 
 		    }
 		    html += '</div>\n';
+	    }
+	    if(arxiv_includeDOI) {
+		html += '\t\t<div class="list-doi" style="font-weight:normal;font-size:90%;"><span class="descriptor">arXiv DOI:</span> ';
+		d = "10.48550/arXiv." + feed.entries[x].id.substring(21,31)
+		html += '<a href="https://dx.doi.org/'+d+'">'+d+'</a> '; 
+		html += '</div>\n';
+
 	    }
 	    //Add summary in a paragraph if requested
 	    if (arxiv_includeSummary != 0) {
